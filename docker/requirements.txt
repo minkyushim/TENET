@@ -1,0 +1,7 @@
+pandas 
+matplotlib
+numpy
+papermill
+nbformat
+jupyterlab
+JPype1

@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+# set -x
 ## specify $1 for input *.csv file, $2 for number of parallel jobs, $3 for trajectory_file , $4 for cell_select_file, $5 for historyLength.
 trajectory_file=`echo $3 | sed "s/\//\\\\\\\\\//g"`
 cell_select_file=`echo $4 | sed "s/\//\\\\\\\\\//g"`
@@ -47,7 +47,7 @@ chmod a+x mpirun_script.sh
 sleep 5
 
 cat outputs/*.csv > TE_result_all.csv
-chmod a+x makeTEasMatrix.py
-python3 makeTEasMatrix.py
+# chmod a+x makeTEasMatrix.py
+python3 makeTEasMatrix.py -i TE_result_all.csv -o outputs/TE_result_matrix.txt
 rm TE_result_all.csv
 
