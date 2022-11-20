@@ -1,7 +1,8 @@
 #!/bin/bash
 set -x
 ## specify $1 for input *.csv file, $2 for number of parallel jobs, $3 for trajectory_file , $4 for cell_select_file, $5 for historyLength.
-
+trajectory_file echo $3 | sed "s/\//\\\\//g"
+cell_select_file echo $4 | sed "s/\//\\\\//g"
 
 # transpose input matrix from cell*gene to gene*cell, and generate list of all pairs of genes
 cat $1 | cut -d ',' -f 2- | tail -n +2 | sed 's/,/ /g' > cell_gene.tsv
@@ -37,7 +38,7 @@ do
 	input_file=`cat list_jobfiles | head -n $loop | tail -n 1`
 	output_id=`cat list_jobfiles | head -n $loop | tail -n 1 | cut -d '_' -f 3`
 	#echo $mpirun_cmd
-	mpirun_cmd=`echo $mpirun_cmd | sed -e "s/$/ -np 1 python3 runTE.py pair_jobs\/${input_file} outputs\/TE_out_${output_id}.csv $3 $4 $5 :/g"`
+	mpirun_cmd=`echo $mpirun_cmd | sed -e "s/$/ -np 1 python3 runTE.py pair_jobs\/${input_file} outputs\/TE_out_${output_id}.csv ${trajectory_file} ${cell_select_file} $5 :/g"`
 	#echo $mpirun_cmd
 done
 echo $mpirun_cmd | sed 's/ :$//g' > mpirun_script.sh
@@ -49,3 +50,4 @@ cat outputs/*.csv > TE_result_all.csv
 chmod a+x makeTEasMatrix.py
 python3 makeTEasMatrix.py
 rm TE_result_all.csv
+
