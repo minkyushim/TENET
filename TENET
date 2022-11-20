@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 ## specify $1 for input *.csv file, $2 for number of parallel jobs, $3 for trajectory_file , $4 for cell_select_file, $5 for historyLength.
 
 
