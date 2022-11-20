@@ -1,8 +1,8 @@
 #!/bin/bash
 set -x
 ## specify $1 for input *.csv file, $2 for number of parallel jobs, $3 for trajectory_file , $4 for cell_select_file, $5 for historyLength.
-trajectory_file echo $3 | sed "s/\//\\\\//g"
-cell_select_file echo $4 | sed "s/\//\\\\//g"
+trajectory_file=`echo $3 | sed "s/\//\\\\//g"`
+cell_select_file=`echo $4 | sed "s/\//\\\\//g"`
 
 # transpose input matrix from cell*gene to gene*cell, and generate list of all pairs of genes
 cat $1 | cut -d ',' -f 2- | tail -n +2 | sed 's/,/ /g' > cell_gene.tsv
