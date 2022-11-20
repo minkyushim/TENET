@@ -6,7 +6,7 @@
 cat $1 | cut -d ',' -f 2- | tail -n +2 | sed 's/,/ /g' > cell_gene.tsv
 cat $1 | head -n 1 | cut -d ',' -f 2- | tr ',' '\n' > gene_names
 num_gene=`cat cell_gene.tsv | wc -l | sed -e 's/^[ \t]*//'`
-python ./PreProcessScriptTF.py $6
+python3 ./PreProcessScriptTF.py $6
 
 # split pair list into # of jobs
 num_job=$2
@@ -36,7 +36,7 @@ do
 	input_file=`cat list_jobfiles | head -n $loop | tail -n 1`
 	output_id=`cat list_jobfiles | head -n $loop | tail -n 1 | cut -d '_' -f 3`
 	#echo $mpirun_cmd
-	mpirun_cmd=`echo $mpirun_cmd | sed -e "s/$/ -np 1 python runTE_TF.py pair_jobs\/${input_file} outputs\/TE_out_${output_id}.csv $3 $4 $5 :/g"`
+	mpirun_cmd=`echo $mpirun_cmd | sed -e "s/$/ -np 1 python3 runTE_TF.py pair_jobs\/${input_file} outputs\/TE_out_${output_id}.csv $3 $4 $5 :/g"`
 	#echo $mpirun_cmd
 done
 echo $mpirun_cmd | sed 's/ :$//g' > mpirun_script.sh
@@ -46,5 +46,5 @@ sleep 5
 
 cat outputs/*.csv > TE_result_all.csv
 chmod a+x makeTEasMatrix.py
-python makeTEasMatrix.py
+python3 makeTEasMatrix.py
 
