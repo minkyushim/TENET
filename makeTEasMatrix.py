@@ -3,7 +3,7 @@ import argparse
 
 def run(args_dict):
     input_file = args_dict['input']
-    output_file = args_dict['input_dir']
+    output_file = args_dict['output']
 
     ifile = open("gene_names")
     gene_name=[]
